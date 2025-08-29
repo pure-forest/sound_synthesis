@@ -1,6 +1,7 @@
 NAME=minisynth
 CC=c++
-FLAGS=-Wall -Wextra -Werror -g
+FLAGS=-g
+AUDIO=-lpulse-simple -lpulse
 INC=$(addprefix inc/, \
 		parsing.hpp)
 
@@ -8,17 +9,18 @@ SRC= $(addprefix src/, \
 		main.cpp \
 		parsing.cpp	)
 
+
 OBJ=$(SRC:src/%.cpp=obj/%.o)
 
 all: bin/$(NAME)
 
 obj/%.o: src/%.cpp $(INC)
 	@mkdir -p $(dir $@)
-	$(CC) $(FLAGS) -o $@ -c $<
+	$(CC) $(FLAGS)  -o  $@ -c $<
 
 bin/$(NAME):$(OBJ)
 	@mkdir -p $(dir $@)
-	$(CC) $(OBJ) -o bin/$(NAME)
+	$(CC) $(OBJ) -o bin/$(NAME) $(AUDIO)
 
 clean:
 	rm -rf obj/
