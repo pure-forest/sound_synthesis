@@ -1,8 +1,6 @@
-#include "parsing.hpp"
+#include "../inc/parsing.hpp"
 
 int main()
 {
-	ParsedFile obj(file1);
 
-	obj.gettempo;
 }
