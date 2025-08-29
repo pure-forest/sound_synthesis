@@ -22,4 +22,4 @@ class ParsedFile
 		int gettempo();
 		ParsedFile(std::string file_name);
 
-}
+};
