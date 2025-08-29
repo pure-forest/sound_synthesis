@@ -3,11 +3,13 @@ CC=c++
 FLAGS=-g
 AUDIO=-lpulse-simple -lpulse
 INC=$(addprefix inc/, \
-		parsing.hpp)
+		parsing.hpp \
+		SoundMaking.hpp)
 
 SRC= $(addprefix src/, \
 		main.cpp \
-		parsing.cpp	)
+		parsing.cpp \
+		SoundMaking.cpp	)
 
 
 OBJ=$(SRC:src/%.cpp=obj/%.o)
