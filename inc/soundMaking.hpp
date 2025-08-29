@@ -31,6 +31,9 @@ class SoundMaking
 
 		//wave related functions
 		float triangleWave();
-		void	makeSound();
+		float squareWave();
+		float sinWave();
+		float sawWave();
+		void  makeSound();
 
 };
