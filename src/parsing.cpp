@@ -1,3 +1,4 @@
+
 #include "../inc/parsing.hpp"
 
 /*
@@ -242,6 +243,7 @@ void ParsedFile::trim(std::string& str) {
     size_t end = str.find_last_not_of(" \t\n\r");
     if (end != std::string::npos)
         str = str.substr(0, end + 1);
+
 }
 
 int ParsedFile::isCommentLine(const std::string& line) const {
