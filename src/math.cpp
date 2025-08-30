@@ -49,8 +49,6 @@ double beatsToSeconds(double beats, int tempo)
 	return ((beats * 60.0) / static_cast<double>(tempo));
 }
 
-
-
 Track SoundMaking::ParsedToSound(const t_track& parsedTrack, int tempo, int wavetype)
 {
 	Track soundTrack;
@@ -73,44 +71,13 @@ Track SoundMaking::ParsedToSound(const t_track& parsedTrack, int tempo, int wave
 	return (soundTrack);
 }
 
-
-SoundMaking::SoundMaking(ParsedFile& parser)
-{
-	std::memset(&_sample_spec, 0, sizeof(_sample_spec));
-	for (int i = 0; i < parser.getTrackCount(); i++)
-	{
-		const t_track *track = parser.getTrack(i);
-		if (track != nullptr)
-		{
-			Track soundTrack = ParsedToSound(*track, parser.getTempo(), parser.getWaveType(i));
-			song.push_back(soundTrack);
-		}
-	}
-	_numOfTrack = song.size();
-	std::cout << "number of track : " << _numOfTrack << std::endl;;
-	_sample_spec.format = PA_SAMPLE_FLOAT32LE;
-    _sample_spec.rate = _sampleRate;
-    _sample_spec.channels = 2;
-	std::cout << "rate in spec: " << _sample_spec.rate << std::endl;
-	if (!pa_sample_spec_valid(&_sample_spec))
-	{
-		std::cerr << "Non valid spec " << std::endl;
-	}
-    _pa = pa_simple_new(nullptr, "Minitsynth", PA_STREAM_PLAYBACK, nullptr, "playback", &_sample_spec, nullptr, nullptr, &_error);
-    if (!_pa)
-    {
-        std::cerr << "PulseAudio error: " << pa_strerror(_error) << std::endl;
-        exit(1);
-    }
-}
-
 void SoundMaking::printTrack() const {
-    for (size_t i = 0; i < song.size(); i++) {
-        std::cout << "Track " << i + 1 << " (Wave Type: " << song[i].waveType << "):" << std::endl;
+    for (size_t i = 0; i < _song.size(); i++) {
+        std::cout << "Track " << i + 1 << " (Wave Type: " << _song[i].waveType << "):" << std::endl;
         std::cout << "Notes:" << std::endl;
 
-        for (size_t j = 0; j < song[i].notes.size(); j++) {
-            const Note& note = song[i].notes[j];
+        for (size_t j = 0; j < _song[i].notes.size(); j++) {
+            const Note& note = _song[i].notes[j];
             std::cout << "  " << j + 1 << ". Frequency: " << note.frequency << " Hz";
             std::cout << ", Duration: " << note.duration << " seconds";
 
