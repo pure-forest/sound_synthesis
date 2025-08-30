@@ -40,6 +40,7 @@ class SoundMaking
 		pa_sample_spec 	_sample_spec;
 		int			 	_error;
 		float			_buffer[1024];
+		std::vector<Track>	song;
 
 		//calculation for different types of wave;
 		float	triangleWave(double frequency, double t);
@@ -47,6 +48,7 @@ class SoundMaking
 		float	sineWave(double frequency, double t);
 		float	sawWave(double frequency, double t);
 		float 	generateWaveSample(int waveType, double frequency, int sampleIndex, int sampleRate);
+		Track	ParsedToSound(const t_track& parsedTrack, int tempo, int wavetype);
 	public:
 		//constructor destrucor
 
@@ -59,27 +61,11 @@ class SoundMaking
 		 * Destructor of sound making class: clean up all the pa_sample related variables and print a message indicating sound playing finished
 		 */
 		~SoundMaking();
+		SoundMaking(ParsedFile& parser);
+		//wave related functions
 
-		/**
-		 * A simple sound making function that takes a sequence of notes and play it accordingly into a single channel.
-		 *
-		 * @param score
-		 * 			a vector points to an array of note struct, each of the note contains durantion and frequency to make sound
-		 * @param waveType
-		 * 			an int from enum type, each number indicates a type of wave (sine, triangle, square, saw)
-		 */
-		void  	makeSound(const std::vector<Note>& score, int waveType);
-
-		/**
-		 * A more advanced sound making function that can take up to 2 tracks and play the sounds simutaneously.
-		 * @param leftTrack
-		 * 		a struct contains a vector of notes and and int indicating type of wave.
-		 * @param rightTrack
-		 * 		a struct contains a vector of notes and and int indicating type of wave.
-		 *
-		 */
-		void 	makeSoundStereo(const Track& leftTrack, const Track& rightTrack);
-
-
-
+	//	void  	makeSound(const Note *notes, int waveType);
+	//	void 	makeSoundStereo(const Track& leftTrack, const Track& rightTrack);
+	//	Track	ParsedToSound(const t_track& parsedTrack, int tempo, int wavetype);
+		void printTrack() const;
 };
