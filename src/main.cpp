@@ -1,23 +1,6 @@
 #include "../inc/parsing.hpp"
 #include "../inc/SoundMaking.hpp"
 
-void printTrack(const Track& track) {
-    std::cout << "Track - Wave Type: " << track.waveType << std::endl;
-    std::cout << "Notes:" << std::endl;
-    
-    for (size_t i = 0; i < track.notes.size(); i++) {
-        const Note& note = track.notes[i];
-        std::cout << "  " << i + 1 << ". Frequency: " << note.frequency << " Hz";
-        std::cout << ", Duration: " << note.duration << " seconds";
-        
-        if (note.frequency == 0.0) {
-            std::cout << " (REST)";
-        }
-        
-        std::cout << std::endl;
-    }
-}
-
 int main(int argc, char* argv[]) 
 {
     if (argc != 2) 
@@ -27,15 +10,12 @@ int main(int argc, char* argv[])
     }
     std::string filename = argv[1];
     ParsedFile parser;
-	SoundMaking test;
+	
     if (parser.parseFile(filename) == 1) {
         std::cout << "File parsed successfully!" << std::endl;
 		//parser.printSummary();
-		for (int i = 0; i < parser.getTrackCount(); i++){
-			//int index = parser.getTrack(i);
-			Track soundTrack = test.ParsedToSound(*parser.getTrack(i), parser.getTempo(), parser.getWaveType(i));
-			printTrack(soundTrack);
-		}
+		SoundMaking test(parser);
+		test.printTrack();
     	std::cout << "Done." << std::endl;
         return (0);
     } else

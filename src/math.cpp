@@ -73,3 +73,37 @@ Track SoundMaking::ParsedToSound(const t_track& parsedTrack, int tempo, int wave
 	return (soundTrack);
 }
 
+
+SoundMaking::SoundMaking(ParsedFile& parser)
+{
+	for (int i = 0; i < parser.getTrackCount(); i++)
+	{
+		const t_track *track = parser.getTrack(i);
+		if (track != nullptr)
+		{
+			Track soundTrack = ParsedToSound(*track, parser.getTempo(), parser.getWaveType(i));
+			song.push_back(soundTrack);
+		}	
+	}
+}
+
+void SoundMaking::printTrack() const {
+    for (size_t i = 0; i < song.size(); i++) {
+        std::cout << "Track " << i + 1 << " (Wave Type: " << song[i].waveType << "):" << std::endl;
+        std::cout << "Notes:" << std::endl;
+        
+        for (size_t j = 0; j < song[i].notes.size(); j++) {
+            const Note& note = song[i].notes[j];
+            std::cout << "  " << j + 1 << ". Frequency: " << note.frequency << " Hz";
+            std::cout << ", Duration: " << note.duration << " seconds";
+            
+            if (note.frequency == 0.0) {
+                std::cout << " (REST)";
+            }
+            
+            std::cout << std::endl;
+        }
+        std::cout << std::endl;
+    }
+}
+
