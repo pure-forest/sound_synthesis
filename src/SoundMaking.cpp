@@ -45,6 +45,7 @@ SoundMaking::~SoundMaking()
     pa_simple_free(_pa);
 }
 
+/*
 void SoundMaking::makeSound(const std::vector<Note>& score, int waveType) {
     for (const auto& note : score) {
         int totalSamples = static_cast<int>(note.duration * _sampleRate);
@@ -126,6 +127,7 @@ void SoundMaking::makeSoundStereo(const Track& leftTrack, const Track& rightTrac
     std::cout << "Finished playing stereo tracks." << std::endl;
 }
 
+*/
 float SoundMaking::generateWaveSample(int waveType, double frequency, int sampleIndex, int sampleRate) 
 {
     double t = static_cast<double>(sampleIndex) / sampleRate;
