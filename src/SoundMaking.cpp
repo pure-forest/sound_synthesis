@@ -43,6 +43,7 @@ SoundMaking::~SoundMaking()
 {
     pa_simple_drain(_pa, &_error);
     pa_simple_free(_pa);
+    std::cout << "Finished playing stereo tracks." << std::endl;
 }
 
 void SoundMaking::makeSound(const std::vector<Note>& score, int waveType) {
@@ -122,8 +123,6 @@ void SoundMaking::makeSoundStereo(const Track& leftTrack, const Track& rightTrac
         }
     }
 
-    pa_simple_drain(_pa, &_error);
-    std::cout << "Finished playing stereo tracks." << std::endl;
 }
 
 float SoundMaking::generateWaveSample(int waveType, double frequency, int sampleIndex, int sampleRate) 
