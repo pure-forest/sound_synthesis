@@ -13,15 +13,15 @@ class SoundMaking
 	private:
 		//const value
 		const double	_amplitude = 0.5;
-		const int 		_sampleRate = 40100;
+		const int 		_sampleRate = 44100;
 		const int 		_bufferSize = 1024;
 		//pa related variables
 		pa_simple 		*_pa;
 		pa_sample_spec 	_sample_spec;
 		int			 	_error;
-		int				_numOfTrack;
 		std::vector<Track>	song;
-
+		int				_numOfTrack;
+		std::vector<pa_simple*> streams;
 		//calculation for different types of wave;
 		float	triangleWave(double frequency, double t);
 		float	squareWave(double frequency, double t);
@@ -41,5 +41,5 @@ class SoundMaking
 		//wave related functions
 
 		void  	makeSound();
-		void printTrack() const;
+		void 	printTrack() const;
 };

@@ -90,7 +90,7 @@ SoundMaking::SoundMaking(ParsedFile& parser)
 	std::cout << "number of track : " << _numOfTrack << std::endl;;
 	_sample_spec.format = PA_SAMPLE_FLOAT32LE;
     _sample_spec.rate = _sampleRate;
-    _sample_spec.channels = _numOfTrack;
+    _sample_spec.channels = 2;
 	std::cout << "rate in spec: " << _sample_spec.rate << std::endl;
 	if (!pa_sample_spec_valid(&_sample_spec))
 	{

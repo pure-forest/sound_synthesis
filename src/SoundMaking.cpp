@@ -46,77 +46,55 @@ float SoundMaking::generateWaveSample(int waveType, double frequency, int sample
     }
 }
 
-void	SoundMaking::makeSound()
+void SoundMaking::makeSound()
 {
-	float	_buffer[_bufferSize * _numOfTrack];
-	int		trackIndex = 0;
-	int		noteIndex = 0;
-	int		sampleIndex = 0;
-	std::vector<size_t> noteIndices(_numOfTrack, 0);
-	std::vector<size_t> sampleIndices(_numOfTrack, 0);
+    float _buffer[_bufferSize * 2]; // Always use stereo output (2 channels)
+    std::vector<size_t> noteIndices(_numOfTrack, 0);
+    std::vector<size_t> sampleIndices(_numOfTrack, 0);
 
+    while (1)
+    {
+        bool alltrackdone = true;
+        for (int i = 0; i < _bufferSize; ++i)
+        {
+            float left_sample = 0.0f;
+            float right_sample = 0.0f;
 
-	while (1)
-	{
-		bool alltrackdone = true;
-		for (int i = 0; i < _bufferSize; ++i)
-		{
-			for (int track = 0; track < _numOfTrack; ++track)
-			{
-				float	sampleAmplitude = 0.0f;
-				if (track < song.size() && noteIndices[track] < song[track].notes.size())
-				{
-					const Note& note = song[track].notes[noteIndices[track]];
-					sampleAmplitude = generateWaveSample(song[trackIndex].waveType, note.frequency,
-									sampleIndices[track], _sampleRate);
-					sampleIndices[track]++;
-					if (sampleIndices[track] >= note.duration * _sampleRate)
-					{
-						sampleIndices[track] = 0;
-						noteIndices[track]++;
-					}
-					alltrackdone = false;
-				}
-				_buffer[i * _numOfTrack + track] = sampleAmplitude;
-			}
-		}
-		if (alltrackdone)
-			break;
-		if (pa_simple_write(_pa, _buffer, _bufferSize * _numOfTrack * sizeof(float),
-								&_error) < 0)
-			{
-				std::cerr << "PulseAudio write error: " << pa_strerror(_error) << std::endl;
-				exit(1);
-			}
-	}
-
-	// while (trackIndex < song.size())
-	// {
-	// 	noteIndex = 0;
-	// 	while (noteIndex < song[trackIndex].notes.size())
-	// 	{
-	// 		for (int i = 0; i < _bufferSize; ++i)
-	// 		{
-	// 			sampleAmplitude = generateWaveSample(song[trackIndex].waveType, song[trackIndex].notes[noteIndex].frequency,
-	// 								sampleIndex, _sampleRate);
-	// 			sampleIndex++;
-	// 			if (sampleIndex >= song[trackIndex].notes[noteIndex].duration * _sampleRate)
-	// 			{
-	// 				sampleIndex = 0;
-	// 				noteIndex++;
-	// 			}
-	// 			_buffer[_numOfTrack * i + trackIndex] = sampleAmplitude;
-	// 		}
-	// 		std::cout << "Track index = " << trackIndex << std::endl;
-	// 		std::cout << "note index = " << noteIndex << std::endl;
-	// 		std::cout << "sample index = " << sampleIndex << std::endl;
-	// 		if (pa_simple_write(_pa, _buffer, _bufferSize * _numOfTrack * sizeof(float),
-	// 							&_error) < 0)
-	// 		{
-	// 			std::cerr << "PulseAudio write error: " << pa_strerror(_error) << std::endl;
-	// 			exit(1);
-	// 		}
-	// 	}
-	// 	trackIndex++;
-	// }
+            for (int track = 0; track < _numOfTrack; ++track)
+            {
+                float sampleAmplitude = 0.0f;
+                if (track < song.size() && noteIndices[track] < song[track].notes.size())
+                {
+                    const Note& note = song[track].notes[noteIndices[track]];
+                    sampleAmplitude = generateWaveSample(song[track].waveType, note.frequency,
+                                    sampleIndices[track], _sampleRate);
+                    sampleIndices[track]++;
+                    if (sampleIndices[track] >= note.duration * _sampleRate)
+                    {
+                        sampleIndices[track] = 0;
+                        noteIndices[track]++;
+                    }
+                    alltrackdone = false;
+                }
+                // Mix tracks to stereo (simple panning: odd tracks left, even tracks right)
+                if (track % 2 == 0) {
+                    left_sample += sampleAmplitude;
+                } else {
+                    right_sample += sampleAmplitude;
+                }
+            }
+            left_sample = left_sample / (_numOfTrack / 2.0f);
+            right_sample = right_sample /(_numOfTrack / 2.0f);
+            _buffer[i * 2] = left_sample;
+            _buffer[i * 2 + 1] = right_sample;
+        }
+        if (alltrackdone)
+            break;
+        if (pa_simple_write(_pa, _buffer, _bufferSize * 2 * sizeof(float), &_error) < 0)
+        {
+            std::cerr << "PulseAudio write error: " << pa_strerror(_error) << std::endl;
+            exit(1);
+        }
+    }
 }
+
