@@ -4,28 +4,10 @@
 #include <pulse/simple.h>
 #include <pulse/error.h>
 #include <cmath>
+#include "struct.hpp"
 
 class parsing;
 
-struct Note 
-{
-    double frequency;  
-    double duration; 
-};
-
-enum	type
-{
-	SINE,
-	TRIANGLE,
-	SQUARE,
-	SAW,
-};
-
-struct Track 
-{
-    std::vector<Note> notes;
-    int waveType;       // 0=sine, 1=square, 2=triangle, 3=saw
-};
 
 class SoundMaking
 {
@@ -39,6 +21,7 @@ class SoundMaking
 		pa_sample_spec _sample_spec;
 		int			   _error;
 		float			_buffer[1024];
+		
 		//calculation for different types of wave;
 		float	triangleWave(double frequency, double t);
 		float	squareWave(double frequency, double t);
@@ -52,9 +35,7 @@ class SoundMaking
 
 		//wave related functions
 		
-		void  	makeSound(const std::vector<Note>& score, int waveType);
-		void 	makeSoundStereo(const Track& leftTrack, const Track& rightTrack);
-		
-		
-
+	//	void  	makeSound(const Note *notes, int waveType);
+	//	void 	makeSoundStereo(const Track& leftTrack, const Track& rightTrack);
+		Track	ParsedToSound(const t_track& parsedTrack, int tempo, int wavetype);
 };

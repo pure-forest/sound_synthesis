@@ -184,6 +184,21 @@ int ParsedFile::getTrackCount() const {
     return tracks.size();
 }
 
+int ParsedFile::getWaveType(int trackIndex) const {
+	if (trackIndex < 0 || trackIndex >= (int)tracks.size())
+		return (0);
+	const std::string& instrument = tracks[trackIndex].instrument;
+	if (instrument == "sine")
+		return (0);
+	if (instrument == "square")
+		return (1);
+	if (instrument == "triangle")
+		return (2);
+	if (instrument == "saw")
+		return (3);
+	return (0);
+}
+
 std::string ParsedFile::noteToString(const t_notes* note) {
     std::string result;
     
