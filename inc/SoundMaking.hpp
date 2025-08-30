@@ -60,7 +60,6 @@ class SoundMaking
 		 */
 		~SoundMaking();
 
-<<<<<<< HEAD
 		/**
 		 * A simple sound making function that takes a sequence of notes and play it accordingly into a single channel.
 		 *
@@ -83,11 +82,4 @@ class SoundMaking
 
 
 
-=======
-		//wave related functions
-
-	//	void  	makeSound(const Note *notes, int waveType);
-	//	void 	makeSoundStereo(const Track& leftTrack, const Track& rightTrack);
-		Track	ParsedToSound(const t_track& parsedTrack, int tempo, int wavetype);
->>>>>>> c01a1c4a507a3704c62b3796082bfd41f7302705
 };
