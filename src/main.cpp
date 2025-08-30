@@ -13,9 +13,9 @@ int main(int argc, char* argv[])
 
     if (parser.parseFile(filename) == 1) {
         std::cout << "File parsed successfully!" << std::endl;
-		// parser.printSummary();
+		parser.printSummary();
 		SoundMaking test(parser);
-		test.printTrack();
+		//test.printTrack();
 		test.makeSound();
     	std::cout << "Done." << std::endl;
         return (0);

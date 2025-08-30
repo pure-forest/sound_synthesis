@@ -1,4 +1,5 @@
 tempo 160
+volumes 0,100
 tracks triangle,sine
 
 1: | c d e f e d | c/3  g | c/5  r/1 |

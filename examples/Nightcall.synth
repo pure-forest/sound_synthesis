@@ -2,6 +2,7 @@
 # Converted from MIDI
 
 tempo 90
+volumes 50, 20
 tracks triangle,sine,sine,sine,sine,sine,sine,saw,saw,saw,saw,saw,saw,sine,sine,sine,sine,sine,triangle,triangle,triangle,square,square,square,kick,snare
 
 # Track  2: channel  0 (Pad 3 (polysynth)), 1 voices

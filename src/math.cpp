@@ -83,6 +83,7 @@ SoundMaking::SoundMaking(ParsedFile& parser)
 		if (track != nullptr)
 		{
 			Track soundTrack = ParsedToSound(*track, parser.getTempo(), parser.getWaveType(i));
+			soundTrack.volume = parser.getVolume(i);
 			song.push_back(soundTrack);
 		}
 	}
