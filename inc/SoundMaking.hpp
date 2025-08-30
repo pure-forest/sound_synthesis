@@ -21,21 +21,24 @@ class SoundMaking
 		pa_sample_spec _sample_spec;
 		int			   _error;
 		float			_buffer[1024];
-		
+		std::vector<Track>	song;
+
 		//calculation for different types of wave;
 		float	triangleWave(double frequency, double t);
 		float	squareWave(double frequency, double t);
 		float	sineWave(double frequency, double t);
 		float	sawWave(double frequency, double t);
 		float 	generateWaveSample(int waveType, double frequency, int sampleIndex, int sampleRate);
+		Track	ParsedToSound(const t_track& parsedTrack, int tempo, int wavetype);
 	public:
 		//constructor destructor
 		SoundMaking();
 		~SoundMaking();
-
+		SoundMaking(ParsedFile& parser);
 		//wave related functions
 		
 	//	void  	makeSound(const Note *notes, int waveType);
 	//	void 	makeSoundStereo(const Track& leftTrack, const Track& rightTrack);
-		Track	ParsedToSound(const t_track& parsedTrack, int tempo, int wavetype);
+	//	Track	ParsedToSound(const t_track& parsedTrack, int tempo, int wavetype);
+		void printTrack() const;
 };
