@@ -9,7 +9,8 @@ INC=$(addprefix inc/, \
 SRC= $(addprefix src/, \
 		main.cpp \
 		parsing.cpp \
-		SoundMaking.cpp	)
+		SoundMaking.cpp	\
+		math.cpp )
 
 
 OBJ=$(SRC:src/%.cpp=obj/%.o)

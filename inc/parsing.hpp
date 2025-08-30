@@ -10,23 +10,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
-
-typedef struct s_notes
-{
-    char pitch;
-    char alter;
-    int octave;
-    float duration;
-    struct s_notes *next;
-
-} t_notes;
-
-typedef struct s_track
-{
-    int trackNumber;
-    std::string instrument;
-    t_notes* notes;
-} t_track;
+#include "struct.hpp"
 
 class ParsedFile
 {
@@ -50,6 +34,7 @@ public:
     const std::vector<t_track>& getTracks() const;
     const t_track* getTrack(int trackIndex) const;
     int getTrackCount() const;
+	int getWaveType(int trackIndex) const;
     
     //work with notes 
     static std::string noteToString(const t_notes* note);

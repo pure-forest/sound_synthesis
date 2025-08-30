@@ -4,19 +4,20 @@
 #include <pulse/simple.h>
 #include <pulse/error.h>
 #include <cmath>
+#include "struct.hpp"
 
 class parsing;
 
-struct Note 
+struct Note
 {
-    double frequency;  
-    double duration; 
+    double frequency;
+    double duration;
 };
 
-struct Track 
+struct Track
 {
     std::vector<Note> notes;
-    int waveType;       
+    int waveType;
 };
 
 enum	type
@@ -34,11 +35,12 @@ class SoundMaking
 		const double	_amplitude = 0.5;
 		const int 		_sampleRate = 44100;
 		const int 		_bufferSize = 1024;
-		//pa related variables  
+		//pa related variables
 		pa_simple 		*_pa;
 		pa_sample_spec 	_sample_spec;
 		int			 	_error;
 		float			_buffer[1024];
+
 		//calculation for different types of wave;
 		float	triangleWave(double frequency, double t);
 		float	squareWave(double frequency, double t);
@@ -58,9 +60,10 @@ class SoundMaking
 		 */
 		~SoundMaking();
 
+<<<<<<< HEAD
 		/**
 		 * A simple sound making function that takes a sequence of notes and play it accordingly into a single channel.
-		 * 
+		 *
 		 * @param score
 		 * 			a vector points to an array of note struct, each of the note contains durantion and frequency to make sound
 		 * @param waveType
@@ -74,10 +77,17 @@ class SoundMaking
 		 * 		a struct contains a vector of notes and and int indicating type of wave.
 		 * @param rightTrack
 		 * 		a struct contains a vector of notes and and int indicating type of wave.
-		 * 
+		 *
 		 */
 		void 	makeSoundStereo(const Track& leftTrack, const Track& rightTrack);
-		
-		
 
+
+
+=======
+		//wave related functions
+
+	//	void  	makeSound(const Note *notes, int waveType);
+	//	void 	makeSoundStereo(const Track& leftTrack, const Track& rightTrack);
+		Track	ParsedToSound(const t_track& parsedTrack, int tempo, int wavetype);
+>>>>>>> c01a1c4a507a3704c62b3796082bfd41f7302705
 };
