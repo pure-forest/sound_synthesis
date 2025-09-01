@@ -110,16 +110,18 @@ int ParsedFile::parseFile(const std::string& filename) {
         if (volumeParsed == 0)
         {
             if (parseVolume(line) == 1)
+			{
                 volumeParsed = 1;
+				continue;
+			}
             else {
-                std::cout << "Error: volume expected" << std::endl;
-                return (0);
+                volumeParsed = 2;
             }
-            continue;
+            
         }
         if (tracksParsed == 0)
         {
-            if (parseTracksLine(line) == 1)
+            if (parseTracksLine(line, volumeParsed) == 1)
                 tracksParsed = 1;
             else {
                 std::cout << "Error: Expected tracks declaration" << std::endl;
@@ -338,7 +340,7 @@ int ParsedFile::parseVolume(const std::string& line)
         return (1);
 }
 
-int ParsedFile::parseTracksLine(const std::string& line) {
+int ParsedFile::parseTracksLine(const std::string& line, int volumeParsed) {
     if (line.find("tracks ") != 0)
         return (0);
     
@@ -355,15 +357,15 @@ int ParsedFile::parseTracksLine(const std::string& line) {
         newTrack.instrument = instrument;
         newTrack.notes = nullptr;
 
-        if (trackNumber - 1 < (int)volumes.size())
+        if (volumeParsed == 1 && (trackNumber - 1 < (int)volumes.size()))
             newTrack.volume = volumes[trackNumber - 1];
         else
-            newTrack.volume = 60; //default value
+            newTrack.volume = 45; //default value
 
+		std::cout << "track.volum : " << newTrack.volume << std::endl;
         tracks.push_back(newTrack);
         trackNumber++;
     }
-    
     if (tracks.empty())
         return (0);
     return (1);

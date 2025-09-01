@@ -10,10 +10,10 @@ SoundMaking::SoundMaking(ParsedFile& parser)
 		{
 			Track soundTrack = ParsedToSound(*track, parser.getTempo(), parser.getWaveType(i));
 			soundTrack.volume = parser.getVolume(i);
-			song.push_back(soundTrack);
+			_song.push_back(soundTrack);
 		}
 	}
-	_numOfTrack = song.size();
+	_numOfTrack = _song.size();
 	std::cout << "number of track : " << _numOfTrack << std::endl;;
 	_sample_spec.format = PA_SAMPLE_FLOAT32LE;
     _sample_spec.rate = _sampleRate;
@@ -102,10 +102,10 @@ void SoundMaking::makeSound()
                 {
 
                     //increate frame here
-                    const Note& note = song[track].notes[noteIndices[track]];
+                    const Note& note = _song[track].notes[noteIndices[track]];
                     //added volume modification here
-                    float vol = static_cast<float>(song[track].volume) / 100.0f;
-                    sampleAmplitude = generateWaveSample(song[track].waveType, note.frequency,
+                    float vol = static_cast<float>(_song[track].volume) / 100.0f;
+                    sampleAmplitude = generateWaveSample(_song[track].waveType, note.frequency,
                                     sampleIndices[track], _sampleRate, vol);
                     
 
