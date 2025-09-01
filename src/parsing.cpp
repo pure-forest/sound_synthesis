@@ -55,7 +55,9 @@ int parseMusicFile(const std::string& filename) {
 }
 
 // Constructor
-ParsedFile::ParsedFile() : tempo(60), currentOctave(4), currentDuration(1.0f) {}
+ParsedFile::ParsedFile() : tempo(60), currentOctave(4), currentDuration(1.0f) {
+    volumes.clear();
+}
 
 // Destructor - clean up allocated memory
 ParsedFile::~ParsedFile() {
@@ -83,10 +85,11 @@ int ParsedFile::parseFile(const std::string& filename) {
     }
 
     cleanup(); // Clear any previous data
-
+    volumes.clear();
     std::string line;
     int tempoParsed = 0;
     int tracksParsed = 0;
+    int volumeParsed = 0;
 
     while (std::getline(file, line)) {
         trim(line);
@@ -94,22 +97,33 @@ int ParsedFile::parseFile(const std::string& filename) {
         if (isCommentLine(line) == 1 || line.empty())
             continue;
 
-        if (tempoParsed == 0) {
-            if (parseTempoLine(line) == 1) {
+        if (tempoParsed == 0)
+        {
+            if (parseTempoLine(line) == 1)
                 tempoParsed = 1;
-            } else {
+            else {
                 std::cout << "Error: Expected tempo declaration" << std::endl;
-                return 0;
+                return (0);
             }
             continue;
         }
-
-        if (tracksParsed == 0) {
-            if (parseTracksLine(line) == 1) {
+        if (volumeParsed == 0)
+        {
+            if (parseVolume(line) == 1)
+                volumeParsed = 1;
+            else {
+                std::cout << "Error: volume expected" << std::endl;
+                return (0);
+            }
+            continue;
+        }
+        if (tracksParsed == 0)
+        {
+            if (parseTracksLine(line) == 1)
                 tracksParsed = 1;
-            } else {
+            else {
                 std::cout << "Error: Expected tracks declaration" << std::endl;
-                return 0;
+                return (0);
             }
             continue;
         }
@@ -132,6 +146,13 @@ void ParsedFile::printSummary() const {
         if (i > 0)
             std::cout << ", ";
         std::cout << tracks[i].instrument;
+    }
+    std::cout << std::endl;
+    std::cout << "Volumes: ";
+    for (size_t i = 0; i < tracks.size(); i++) {
+        if (i > 0)
+            std::cout << ", ";
+        std::cout << tracks[i].volume;
     }
     std::cout << std::endl;
 
@@ -164,6 +185,12 @@ void ParsedFile::printSummary() const {
 // Getters for accessing parsed data
 int ParsedFile::getTempo() const {
     return (tempo);
+}
+
+int ParsedFile::getVolume(int trackIndex) const {
+    if (trackIndex < 0 || trackIndex >= (int)tracks.size())
+        return (60); // Default volume 
+    return (tracks[trackIndex].volume);
 }
 
 const std::vector<t_track>& ParsedFile::getTracks() const {
@@ -282,6 +309,35 @@ int ParsedFile::parseTempoLine(const std::string& line) {
     return (0);
 }
 
+int ParsedFile::parseVolume(const std::string& line)
+{
+    if (line.find("volumes ") != 0)
+        return (0);
+    std::string str = line.substr(8);
+    std::istringstream stream(str);
+    std::string volumeStr;
+
+    while (std::getline(stream, volumeStr, ','))
+    {
+        trim(volumeStr);
+        int vol;
+        if (safeStringToInt(volumeStr, vol) == 1)
+        {
+            if (vol < 0)
+                vol = 0;
+            else if (vol > 100)
+                vol = 100;
+            volumes.push_back(vol);
+        }
+        else
+            volumes.push_back(60); // i set default to 60, but it can be whatever
+    }
+    if (volumes.empty())
+        return (0);
+    else
+        return (1);
+}
+
 int ParsedFile::parseTracksLine(const std::string& line) {
     if (line.find("tracks ") != 0)
         return (0);
@@ -295,10 +351,17 @@ int ParsedFile::parseTracksLine(const std::string& line) {
         trim(instrument);
         t_track newTrack;
         newTrack.trackNumber = trackNumber;
-        trackNumber++;
+       // trackNumber++;
         newTrack.instrument = instrument;
         newTrack.notes = nullptr;
+
+        if (trackNumber - 1 < (int)volumes.size())
+            newTrack.volume = volumes[trackNumber - 1];
+        else
+            newTrack.volume = 60; //default value
+
         tracks.push_back(newTrack);
+        trackNumber++;
     }
     
     if (tracks.empty())

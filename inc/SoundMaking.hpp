@@ -24,7 +24,7 @@ class SoundMaking
 		float	squareWave(double frequency, double t);
 		float	sineWave(double frequency, double t);
 		float	sawWave(double frequency, double t);
-		float 	generateWaveSample(int waveType, double frequency, int sampleIndex, int sampleRate);
+		float 	generateWaveSample(int waveType, double frequency, int sampleIndex, int sampleRate, float vol);
 		Track	ParsedToSound(const t_track& parsedTrack, int tempo, int wavetype);
 	public:
 		//constructor destrucor

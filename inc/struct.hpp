@@ -16,13 +16,14 @@ typedef struct s_track
     int trackNumber;
     std::string instrument;
     t_notes* notes;
+    int volume;
 } t_track;
 
 enum	type
 {
 	SINE,
+    SQUARE,
 	TRIANGLE,
-	SQUARE,
 	SAW,
 };
 
@@ -35,5 +36,6 @@ struct Note
 struct Track 
 {
     std::vector<Note> notes;
-    int waveType;
+    int waveType; 
+    int volume;
 };

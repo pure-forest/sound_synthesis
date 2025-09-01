@@ -9,10 +9,11 @@ SoundMaking::SoundMaking(ParsedFile& parser)
 		if (track != nullptr)
 		{
 			Track soundTrack = ParsedToSound(*track, parser.getTempo(), parser.getWaveType(i));
-			_song.push_back(soundTrack);
+			soundTrack.volume = parser.getVolume(i);
+			song.push_back(soundTrack);
 		}
 	}
-	_numOfTrack = _song.size();
+	_numOfTrack = song.size();
 	std::cout << "number of track : " << _numOfTrack << std::endl;;
 	_sample_spec.format = PA_SAMPLE_FLOAT32LE;
     _sample_spec.rate = _sampleRate;
@@ -63,22 +64,20 @@ SoundMaking::~SoundMaking()
     std::cout << "Finished playing stereo tracks." << std::endl;
 }
 
-float SoundMaking::generateWaveSample(int waveType, double frequency, int sampleIndex, int sampleRate)
+float SoundMaking::generateWaveSample(int waveType, double frequency, int sampleIndex, int sampleRate, float vol)
 {
     double t = static_cast<double>(sampleIndex) / sampleRate;
+    float sample = 0.0f;
     switch (waveType)
     {
-        case SINE: 
-            return sineWave(frequency, t);
-        case SQUARE:
-            return squareWave(frequency, t);
-        case TRIANGLE:
-            return triangleWave(frequency, t);
-        case SAW:
-            return sawWave(frequency, t);
-        default:
-            return sineWave(frequency, t);
+
+        case 0: sample = sineWave(frequency, t);
+        case 1: sample =  squareWave(frequency, t);
+        case 2: sample = triangleWave(frequency, t);
+        case 3: sample = sawWave(frequency, t);
+        default: sample = sineWave(frequency, t);
     }
+    return (sample * vol);
 }
 
 void SoundMaking::makeSound()
@@ -101,10 +100,15 @@ void SoundMaking::makeSound()
                 float sampleAmplitude = 0.0f;
                 if (track < _song.size() && noteIndices[track] < _song[track].notes.size())
                 {
-                    const Note& note = _song[track].notes[noteIndices[track]];
-                    sampleAmplitude = generateWaveSample(_song[track].waveType, note.frequency,
-                                    sampleIndices[track], _sampleRate);
+
                     //increate frame here
+                    const Note& note = song[track].notes[noteIndices[track]];
+                    //added volume modification here
+                    float vol = static_cast<float>(song[track].volume) / 100.0f;
+                    sampleAmplitude = generateWaveSample(song[track].waveType, note.frequency,
+                                    sampleIndices[track], _sampleRate, vol);
+                    
+
                     sampleIndices[track]++;
                     //reset sample index to zero. increment note index
                     if (sampleIndices[track] >= note.duration * _sampleRate)

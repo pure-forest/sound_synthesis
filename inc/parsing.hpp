@@ -17,6 +17,7 @@ class ParsedFile
 private:
     int tempo;
     std::vector<t_track> tracks;
+    std::vector<int> volumes;
     
     int currentOctave;
     float currentDuration;
@@ -35,6 +36,7 @@ public:
     const t_track* getTrack(int trackIndex) const;
     int getTrackCount() const;
 	int getWaveType(int trackIndex) const;
+    int getVolume(int trackIndex) const;
     
     //work with notes 
     static std::string noteToString(const t_notes* note);
@@ -48,6 +50,7 @@ private:
     int parseTempoLine(const std::string& line);
     int parseTracksLine(const std::string& line);
     int parseTrackLine(const std::string& line);
+    int parseVolume(const std::string& line);
     void parseNotesForTrack(int trackIndex, const std::string& notesStr);
     int parseNoteToken(const std::string& token, t_notes& note);
     void resetLineState();
