@@ -48,7 +48,7 @@ private:
     void trim(std::string& str);
     int isCommentLine(const std::string& line) const;
     int parseTempoLine(const std::string& line);
-    int parseTracksLine(const std::string& line);
+    int parseTracksLine(const std::string& line, int volumeParsed);
     int parseTrackLine(const std::string& line);
     int parseVolume(const std::string& line);
     void parseNotesForTrack(int trackIndex, const std::string& notesStr);

@@ -11,8 +11,6 @@ int main(int argc, char* argv[])
         return (1);
     }
     std::string filename = argv[1];
-    ParsedFile parser;
-
     if (parser.parseFile(filename) == 1) {
         std::cout << "File parsed successfully!" << std::endl;
 		parser.printSummary();
@@ -23,7 +21,6 @@ int main(int argc, char* argv[])
         return (0);
     } else
       return (1);
-    }
     SoundMaking synth(parser);
     synth.makeSound();
     return (0);
