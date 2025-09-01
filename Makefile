@@ -12,14 +12,13 @@ SRC= $(addprefix src/, \
 		SoundMaking.cpp	\
 		math.cpp )
 
-
 OBJ=$(SRC:src/%.cpp=obj/%.o)
 
 all: bin/$(NAME)
 
 obj/%.o: src/%.cpp $(INC)
 	@mkdir -p $(dir $@)
-	$(CC) $(FLAGS)  -o  $@ -c $<
+	$(CC) $(FLAGS) -o  $@ -c $<
 
 bin/$(NAME):$(OBJ)
 	@mkdir -p $(dir $@)

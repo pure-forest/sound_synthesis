@@ -107,7 +107,7 @@ void SoundMaking::makeSound()
                     float vol = static_cast<float>(_song[track].volume) / 100.0f;
                     sampleAmplitude = generateWaveSample(_song[track].waveType, note.frequency,
                                     sampleIndices[track], _sampleRate, vol);
-                    
+
 
                     sampleIndices[track]++;
                     //reset sample index to zero. increment note index
@@ -121,7 +121,7 @@ void SoundMaking::makeSound()
                 // Why summing up the amplitutd works? THat's how sounds waves mix together...
                 if (track % 2 == 0)
                     left_sample += sampleAmplitude;
-                else 
+                else
                     right_sample += sampleAmplitude;
             }
             //averaging it into the safe range of [-1, 1]
