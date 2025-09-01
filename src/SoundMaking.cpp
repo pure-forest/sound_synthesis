@@ -33,17 +33,19 @@ SoundMaking::~SoundMaking()
     std::cout << "Finished playing stereo tracks." << std::endl;
 }
 
-float SoundMaking::generateWaveSample(int waveType, double frequency, int sampleIndex, int sampleRate)
+float SoundMaking::generateWaveSample(int waveType, double frequency, int sampleIndex, int sampleRate, float vol)
 {
     double t = static_cast<double>(sampleIndex) / sampleRate;
+    float sample = 0.0f;
     switch (waveType)
     {
-        case 0: return sineWave(frequency, t);
-        case 1: return squareWave(frequency, t);
-        case 2: return triangleWave(frequency, t);
-        case 3: return sawWave(frequency, t);
-        default: return sineWave(frequency, t);
+        case 0: sample = sineWave(frequency, t);
+        case 1: sample =  squareWave(frequency, t);
+        case 2: sample = triangleWave(frequency, t);
+        case 3: sample = sawWave(frequency, t);
+        default: sample = sineWave(frequency, t);
     }
+    return (sample * vol);
 }
 
 void SoundMaking::makeSound()
@@ -66,8 +68,11 @@ void SoundMaking::makeSound()
                 if (track < song.size() && noteIndices[track] < song[track].notes.size())
                 {
                     const Note& note = song[track].notes[noteIndices[track]];
+                    //added volume modification here
+                    float vol = static_cast<float>(song[track].volume) / 100.0f;
                     sampleAmplitude = generateWaveSample(song[track].waveType, note.frequency,
-                                    sampleIndices[track], _sampleRate);
+                                    sampleIndices[track], _sampleRate, vol);
+                    
                     sampleIndices[track]++;
                     if (sampleIndices[track] >= note.duration * _sampleRate)
                     {
