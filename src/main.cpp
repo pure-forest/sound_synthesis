@@ -21,9 +21,5 @@ int main(int argc, char* argv[])
     	std::cout << "Done." << std::endl;
         return (0);
     }
-	else
-      return (1);
-    SoundMaking synth(parser);
-    synth.makeSound();
-    return (0);
+    return (1);
 }
