@@ -1,17 +1,18 @@
 # Prelude no. 1 in C major, BWV 846 - Johann Sebastian Bach
 
 tempo 60
+volumes 80, 100, 100
 tracks triangle , triangle, triangle
 
 # Right hand
 1: r/0.5 g4/0.25 c5 e g4 c5 e r/0.5 g4/0.25 c5 e g4 c5 e |   r/0.5 a4/0.25 d5 f a4 d5 f r/0.5 a4/0.25 d5 f a4 d5 f  |  r/0.5 g4/0.25 d5 f g4 d5 f r/0.5 g4/0.25 d5 f g4 d5 f | r/0.5 g4/0.25 c5 e g4 c5 e r/0.5 g4/0.25 c5 e g4 c5 e | r/0.5 a4/0.25 e5 a5 a4 e5 a5 r/0.5 a4/0.25 e5 a5 a4 e5 a5 | r/0.5 f#4/0.25 a4 d5 f#4 a4 d5 r/0.5 f#4/0.25 a4 d5 f#4 a4 d5 | r/0.5 g4/0.25 d5 g g4 d5 g  r/0.5 g4/0.25 d5 g g4 d5 g | r/0.5 e4/0.25 g c5 e4 g c5  r/0.5 e4/0.25 g c5 e4 g c5 | r/0.5 e4/0.25 g c5 e4 g c5  r/0.5 e4/0.25 g c5 e4 g c5 | r/0.5 d4/0.25 f#4 c5 d4 f#4 c5  r/0.5 d4/0.25 f#4 c5 d4 f#4 c5 | r/0.5 d4/0.25 g4 d5 d4 g4 d5  r/0.5 d4/0.25 g4 d5 d4 g4 d5 | r/0.5 e4/0.25 g c#5 e4 g c#5 r/0.5 e4/0.25 g c#5 e4 g c#5 | r/0.5 d4/0.25 a d5 d4 a d5 r/0.5 d4/0.25 a d5 d4 a d5
-
+s
 #1:
 
 # Left hand
 
 2: c4/2 c4/2 | c4/2 c4/2 | b3/2 b3/2 |  c4/2 c4/2 |  c4/2 c4/2 | c4/2 c4/2 | b3/2 b3/2 | b3/2 b3/2 | a3/2 a3/2 | d3/2 d3/2 | g3/2 g3/2 | g3/2 g3/2 |  f3/2 f3/2
-#2: 
+#2:
 
 3: r/0.25 e4/1.75 r/0.25 e4/1.75 | r/0.25 d4/1.75 r/0.25 d4/1.75 | r/0.25 d4/1.75 r/0.25 d4/1.75 | r/0.25 e4/1.75 r/0.25 e4/1.75 | r/0.25 e4/1.75 r/0.25 e4/1.7 | r/0.25 d4/1.75 r/0.25 d4/1.75 | r/0.25 d4/1.75 r/0.25 d4/1.75 | r/0.25 c4/1.75 r/0.25 c4/1.75 | r/0.25 c4/1.75 r/0.25 c4/1.75 | r/0.25 a3/1.75 r/0.25 a3/1.75 |  r/0.25 b3/1.75 r/0.25 b3/1.75 | r/0.25 a#3/1.75 r/0.25 a#3/1.75 |  r/0.25 a3/1.75 r/0.25 a3/1.75
 #3:
