@@ -36,6 +36,6 @@ struct Note
 struct Track 
 {
     std::vector<Note> notes;
-    int waveType;       // 0=sine, 1=square, 2=triangle, 3=saw
+    int waveType; 
     int volume;
 };

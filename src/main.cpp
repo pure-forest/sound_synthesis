@@ -3,9 +3,11 @@
 
 int main(int argc, char* argv[])
 {
+    ParsedFile parser;
+
     if (argc != 2)
     {
-        std::cout << "Error: Please provide a filename" << std::endl;
+        std::cerr << "Error: Please provide a filename" << std::endl;
         return (1);
     }
     std::string filename = argv[1];
@@ -20,7 +22,9 @@ int main(int argc, char* argv[])
     	std::cout << "Done." << std::endl;
         return (0);
     } else
-        return (1);
-
-
+      return (1);
+    }
+    SoundMaking synth(parser);
+    synth.makeSound();
+    return (0);
 }

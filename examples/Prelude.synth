@@ -1,7 +1,7 @@
 # Prelude no. 2 in C minor, BWV 847 - Johann Sebastian Bach
 
 tempo 60
-tracks triangle,triangle,triangle,triangle,triangle
+tracks sine,sine,sine,sine,sine
 
 # Right hand
 
